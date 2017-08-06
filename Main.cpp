@@ -23,7 +23,15 @@ int main(int argc, char** argv) {
 	if (argc != 3)
 		print_usage_and_quit();
 	
-	regex expr = regex(argv[1]);
+	regex expr;
+	
+	try {
+		expr = regex(argv[1]);
+	} catch(...) {
+		cerr << "Invalid regex expression!\n";
+		return 2;
+	}
+
 	string str = argv[2];
 
 	smatch sm;
