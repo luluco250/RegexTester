@@ -1,4 +1,4 @@
 RegexTester
 ===========
 
-Simple program to test regex expressions.
+A simple program to test regex expressions.
