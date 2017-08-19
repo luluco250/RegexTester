@@ -50,9 +50,8 @@ int main(int argc, char** argv) {
 }
 
 void print_usage_and_quit() {
-	cerr << "Usage: regex [[other] | [expression] [string]]\n"
-	        "Other:\n"
-			"\tcheatsheet    Invoke a cheatsheet for help. (source: https://regexone.com/)\n";
+	cerr << "Usage: regex \"[expression]\" \"[string]\"\n"
+			"Or: \"regex cheatsheet\" for a quick regex reference taken from \"https://regexone.com/\".\n";
 	exit(-1);
 }
 
