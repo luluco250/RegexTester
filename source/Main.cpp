@@ -43,19 +43,8 @@ int main(int argc, char** argv) {
 		str = match.suffix();
 	}
 
-	if (index == 0) {
+	if (index == 0)
 		cout << "No match.\n";
-	}
-
-	/*if (regex_match(str, sm, expr)) {
-		for (const string& match : sm) {
-			cout << index << ": {" << match << "}\n";
-			++index;
-		}
-	} else {
-		cout << "No match.\n";
-		return 1;
-	}*/
 
 	return 0;
 }
