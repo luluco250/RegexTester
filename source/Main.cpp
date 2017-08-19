@@ -34,10 +34,20 @@ int main(int argc, char** argv) {
 
 	string str = argv[2];
 
-	smatch sm;
+	smatch match;
 	int index = 0;
 
-	if (regex_match(str, sm, expr)) {
+	while (regex_search(str, match, expr)) {
+		cout << index << ": {" << match.str() << "}\n";
+		++index;
+		str = match.suffix();
+	}
+
+	if (index == 0) {
+		cout << "No match.\n";
+	}
+
+	/*if (regex_match(str, sm, expr)) {
 		for (const string& match : sm) {
 			cout << index << ": {" << match << "}\n";
 			++index;
@@ -45,7 +55,7 @@ int main(int argc, char** argv) {
 	} else {
 		cout << "No match.\n";
 		return 1;
-	}
+	}*/
 
 	return 0;
 }
