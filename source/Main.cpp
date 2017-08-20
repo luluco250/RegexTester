@@ -2,29 +2,38 @@
 #include <string>
 #include <regex>
 
-using namespace std;
+using std::string;
+using std::regex;
+using std::cout;
+using std::cerr;
+using std::smatch;
 
 void print_usage_and_quit();
 void print_cheatsheet_and_quit();
 
 int main(int argc, char** argv) {
-	ios_base::sync_with_stdio(false);
+	//we won't be using stdio
+	//desyncing it can improve performance
+	std::ios_base::sync_with_stdio(false);
 
-	string temp_str;
-
+	//if there are only two arguments
+	//we'll check if the user wants
+	//to see the cheatsheet
 	if (argc == 2) {
-		temp_str = argv[1];
+		string temp_str = argv[1];
 
 		if (temp_str == "cheatsheet") {
 			print_cheatsheet_and_quit();
 		}
 	}
 
+	//the number of arguments should be three
+	//which include the regex expression and the string
 	if (argc != 3)
 		print_usage_and_quit();
 	
+	//get regex expression from argument #1
 	regex expr;
-	
 	try {
 		expr = regex(argv[1]);
 	} catch(...) {
@@ -32,18 +41,32 @@ int main(int argc, char** argv) {
 		return 2;
 	}
 
+	//get string from argument #2
 	string str = argv[2];
 
+	//regex matcher
 	smatch match;
-	int index = 0;
+	int match_index = 0;
+	int group_index = 0;
 
+	//keep searching until no more matches are found
 	while (regex_search(str, match, expr)) {
-		cout << index << ": {" << match.str() << "}\n";
-		++index;
-		str = match.suffix();
+		//parse through each group in the match
+		for (const auto& group : match) {
+			//e.g. "Match 0: Group 0: {string}"
+			cout << "Match " << match_index << ": Group " << group_index << ": {" << group.str() << "}\n";
+			++group_index;
+		}
+		group_index = 0;
+
+		++match_index;
+		str = match.suffix(); //remove matched substring
 	}
 
-	if (index == 0)
+	//match_index should at least be 1
+	//if there were any matches therefore
+	//0 means there was no match
+	if (match_index == 0)
 		cout << "No match.\n";
 
 	return 0;
